@@ -294,10 +294,7 @@ def read_video(filename: str, opencv: bool = True):
             for i in range(len(stream))
         ]
     )
-    elems = list(Path(filename).parts)
-    elems[-2] = "labeled-data"
-    elems[-1] = elems[-1].split(".")[0]
-    root = os.path.join(*elems)
+    root = os.path.join(".", "labeled-data", Path(filename).stem)
     params = {
         "name": os.path.split(filename)[1],
         "metadata": {
