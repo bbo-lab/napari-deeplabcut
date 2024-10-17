@@ -3,11 +3,28 @@ from __future__ import annotations
 import os
 from enum import Enum, EnumMeta
 from itertools import cycle
+from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
 import pandas as pd
 from napari.utils import colormaps
+
+
+def find_project_config_path(labeled_data_path: str) -> str:
+    return str(Path(labeled_data_path).parents[2] / "config.yaml")
+
+
+def is_latest_version():
+    import json
+    import urllib.request
+    from napari_deeplabcut import __version__
+
+    url = "https://pypi.org/pypi/napari-deeplabcut/json"
+    contents = urllib.request.urlopen(url).read()
+    latest_version = json.loads(contents)["info"]["version"]
+    return __version__ == latest_version, latest_version
+
 
 
 def unsorted_unique(array: Sequence) -> np.ndarray:
